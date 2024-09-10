@@ -9,7 +9,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Text>This is where all of the Profiles will be</Text>
     </View>
   );
 }
