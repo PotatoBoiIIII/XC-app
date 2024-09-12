@@ -9,7 +9,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>This is where all of the Profiles will be</Text>
+      <Text>Please work</Text>
     </View>
   );
 }
