@@ -1,1 +1,1 @@
-# XC-app
+xc-app
