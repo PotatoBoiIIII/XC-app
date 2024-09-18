@@ -1,12 +1,15 @@
 import * as React from 'react'
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TextInput } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+//unable to resolve "react-native-hash" from "App.js"
+//import {JSHash, CONSTANTS} from 'react-native-hash'
 
 const image1 = require('./assets/images/image1.png')
 const image2 = require('./assets/images/image2.png')
 const Tab = createBottomTabNavigator()
+
 
 
 function Status(){
@@ -22,11 +25,23 @@ function Status(){
 }
 
 function Settings(){
+  const [text, setText] = React.useState('');
   return(
     <View style={styles.container}>
       <Image style={styles.image} source = {image2}>
 
       </Image>
+      <TextInput
+        style={styles.input}
+        onChangeText={newText => setText(newText)}
+        defaultValue={text}
+        placeholder="username"
+      />
+      <Text style = {{padding:10, fontSize: 20}}>
+      {/* error */}
+      {/* {JSHash("text", CONSTANTS.HashAlgorithms.sha256)} */}
+      {text}
+      </Text>
     </View>
       
    
@@ -60,5 +75,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10,
+  },
+  input:{
+    alignItems:'center',
+    justifyContent:'center',
+    padding: 10,
   }
 });
