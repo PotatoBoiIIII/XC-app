@@ -1,5 +1,5 @@
 //import { Stack } from "expo-router";
-import {Text, Image, View, TextInput, StyleSheet, SafeAreaView, ImageBackground, Pressable} from 'react-native'
+import {Text, Image, View, TextInput, StyleSheet, SafeAreaView, ImageBackground, Pressable, ScrollView} from 'react-native'
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -21,7 +21,7 @@ const SignUpScreen = ({navigation, route}) =>{
         <InputText placeHolder = "Username"/>
         <InputText placeHolder="Password"/>
         <Separator/>
-        <Button label="Sign Up" navigation={navigation} page = 'Profile' name = "picture"/>
+        <Button label="Sign Up" navigation={navigation} page = 'Terms and Agreement' name = "Terms"/>
       
       </View>
     </View>
@@ -47,7 +47,7 @@ const LoginScreen = ({navigation}) => {
 };
 const ProfileScreen = ({navigation, route}) => {
   return(
-    <View style ={{alignItems: 'center', justifyContent:'center', paddingTop:100}}>
+    <View style ={styles.container}>
       <Text style = {{fontSize:20, borderColor:'black', borderWidth:1, borderRadius:3}}>This is picture</Text>
       <Image style = {{alignItems: 'center', justifyContent: 'center'}}source = {require('../assets/images/image1.png')}>
 
@@ -61,6 +61,48 @@ const ProfileScreen = ({navigation, route}) => {
 
 };
 
+const termsScreen  = ({navigation, route} )=> {
+  return(
+    <View style = {styles.container}>
+      <View style = {styles.view}>
+
+      
+      <ScrollView style = {{borderWidth:3, borderColor:'lightblue', padding: 30}}>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+        <Text>please work</Text>
+
+        <Text>please work</Text>
+        <Text>please work</Text>
+      </ScrollView>
+      <Separator/>
+      <Button label = "Continue" navigation = {navigation} page = "Profile" name = "picture"/>
+      </View>
+    </View>
+  )
+  
+}
+
 export default function RootLayout() {
   return (
     <NavigationContainer independent={true}>
@@ -72,21 +114,13 @@ export default function RootLayout() {
         />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name = "Sign Up" component = {SignUpScreen}/>
+        <Stack.Screen name = "Terms and Agreement" component = {termsScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  input:{
-    height:40,
-    margin:12,
-    borderWidth:1, 
-    padding:10,
-    width:400,
-    borderRadius:5,
-    borderColor:'lightblue'
-  },
   separator:{
     marginVertical: 8,
     borderBottomColor: '#737373',
@@ -104,19 +138,8 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: 'lightblue',
     flex:1/2,
-    borderRadius:10
-  },
-  pressable:{
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor:'lightblue',
-    borderWidth: 3,
-    backgroundColor:'lightblue'
-    
-    
-    
-    
-
+    borderRadius:10,
+    padding: 30
   },
 
 })
