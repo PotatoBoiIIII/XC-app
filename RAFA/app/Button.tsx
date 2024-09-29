@@ -3,9 +3,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 
-export default function Button({label, navigation, page, name}){
+export default function Button({label, navigation, page, name, disabled}){
     return(
-        <Pressable style={({pressed}) => [{borderRadius: pressed ? 10 : 5,},styles.pressable,]} onPress={()=>navigation.navigate(page, {name: name})} >
+        <Pressable style={({pressed}) => [{borderRadius: pressed ? 10 : 5,},styles.pressable,{backgroundColor: disabled ? 'lightgray':'lightblue', borderColor: disabled ? 'lightgray':'lightblue'}]} onPress={()=>navigation.navigate(page, {name: name})} disabled = {disabled} >
             <Text>{label}</Text>
         </Pressable>
     )
@@ -18,6 +18,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderColor:'lightblue',
         borderWidth: 10,
-        backgroundColor:'lightblue'
+        marginHorizontal: 10,
       },
 })

@@ -1,10 +1,12 @@
 //import { Stack } from "expo-router";
-import {Text, Image, View, TextInput, StyleSheet, SafeAreaView, ImageBackground, Pressable, ScrollView} from 'react-native'
+import {Text, Image, View, TextInput, StyleSheet, SafeAreaView, ImageBackground, Pressable, ScrollView, Switch} from 'react-native'
+import {useState} from 'react'
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Button from './Button'
 import InputText from './InputText'
+
 
 const Stack = createNativeStackNavigator();
 const Separator = () => <View style = {styles.separator}/>
@@ -21,7 +23,7 @@ const SignUpScreen = ({navigation, route}) =>{
         <InputText placeHolder = "Username"/>
         <InputText placeHolder="Password"/>
         <Separator/>
-        <Button label="Sign Up" navigation={navigation} page = 'Terms and Agreement' name = "Terms"/>
+        <Button label="Sign Up" navigation={navigation} page='Terms and Agreement' name="Terms" disabled={undefined}/>
       
       </View>
     </View>
@@ -29,17 +31,17 @@ const SignUpScreen = ({navigation, route}) =>{
   );
 }
 const LoginScreen = ({navigation}) => {
-  const[blank, onChangeEmail] = React.useState('')
-  const[blank2, onChangeUsername] = React.useState('')
-  const[blank3, onChangePassword] = React.useState('')
   return (
     <View style = {styles.container}>
       <View style = {styles.view}>
         <InputText placeHolder="Username"/>
         <InputText placeHolder="Password"/>
-      <Button label="Login" navigation={navigation} page = 'Profile' name = "picture"/>
-        <Separator/>
-      <Button label="Sign Up" navigation={navigation} page = 'Sign Up' name = "Sign Up"/>
+      <View style = {styles.viewRow}>
+        <Button label="Login" navigation={navigation} page='Profile' name="picture" disabled={undefined}/>
+          <Separator/>
+        <Button label="Sign Up" navigation={navigation} page='Sign Up' name="Sign Up" disabled={undefined}/>
+      </View>
+      
       </View>
     </View>
     
@@ -47,12 +49,7 @@ const LoginScreen = ({navigation}) => {
 };
 const ProfileScreen = ({navigation, route}) => {
   return(
-    <View style ={styles.container}>
-      <Text style = {{fontSize:20, borderColor:'black', borderWidth:1, borderRadius:3}}>This is picture</Text>
-      <Image style = {{alignItems: 'center', justifyContent: 'center'}}source = {require('../assets/images/image1.png')}>
-
-      </Image>
-    </View>
+      <View></View>
     
     
 
@@ -61,42 +58,83 @@ const ProfileScreen = ({navigation, route}) => {
 
 };
 
-const termsScreen  = ({navigation, route} )=> {
+const TermsScreen  = ({navigation, route} )=> {
+  const [isEnabled, setIsEnabled] = useState(false)
+  const toggleSwitch= ()=> setIsEnabled(previousState=>!previousState)
   return(
     <View style = {styles.container}>
       <View style = {styles.view}>
-
+        <Image source = {require('../assets/images/falcon.png')} style = {{resizeMode:'contain', flex:1, backgroundColor:'lightblue', objectFit:'scale-down'}}/>
+        <View style = {[styles.container, {flex:6}]}>
+          <ScrollView style = {{borderWidth:3, borderColor:'lightblue', padding: 30, flex:6}}>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+            <Text>please work</Text>
+          </ScrollView>
+        </View>
       
-      <ScrollView style = {{borderWidth:3, borderColor:'lightblue', padding: 30}}>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-        <Text>please work</Text>
-
-        <Text>please work</Text>
-        <Text>please work</Text>
-      </ScrollView>
-      <Separator/>
-      <Button label = "Continue" navigation = {navigation} page = "Profile" name = "picture"/>
+        <Separator/>
+        <View style = {styles.viewRow}>
+          <Switch trackColor={{false: '#767577', true: '#81b0ff'}}
+          thumbColor={isEnabled ? '#add8e6' : '#f4f3f4'}
+          ios_backgroundColor="#add8e6"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+          style = {{margin:10}}/>
+            <View style = {styles.container}>
+              <Text >I agree to the</Text>
+              <Text >Terms and Agreement</Text>
+            </View>
+          <Button label = "Continue" navigation = {navigation} page = "Profile" name = "picture" disabled = {!isEnabled} />
+        </View>
+      
       </View>
     </View>
   )
@@ -110,12 +148,12 @@ export default function RootLayout() {
         <Stack.Screen
           name="loginScreen"
           component={LoginScreen}
-          options={{title: 'Welcome to RAFA!!!'}}
+          options={{title: 'Welcome to RAFA!', headerStyle: {backgroundColor: 'lightblue'}, }}
         />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name = "Sign Up" component = {SignUpScreen}/>
-        <Stack.Screen name = "Terms and Agreement" component = {termsScreen}/>
-      </Stack.Navigator>
+        <Stack.Screen name="Profile" component={ProfileScreen} options={{headerStyle:{backgroundColor:'lightblue'}}}/>
+        <Stack.Screen name = "Sign Up" component = {SignUpScreen} options={{headerStyle:{backgroundColor:'lightblue'}}}/>
+        <Stack.Screen name = "Terms and Agreement" component = {TermsScreen} options={{headerStyle:{backgroundColor:'lightblue'}}}/>
+      </Stack.Navigator> 
     </NavigationContainer>
   );
 }
@@ -130,6 +168,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent: 'center',
     flex:1,
+    padding:0
 
   },
   view:{
@@ -137,9 +176,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 3,
     borderColor: 'lightblue',
-    flex:1/2,
-    borderRadius:10,
-    padding: 30
+    flex:1,
+    padding: 10,
+    margin:0,
+    width:'100%'
   },
+  viewRow:{
+    alignItems:'center',
+    justifyContent: 'center',
+    flexDirection: 'row'
+  }
 
 })
