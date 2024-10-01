@@ -6,6 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Button from './Button'
 import InputText from './InputText'
+import {Calendar} from 'react-native-calendars'
 
 
 const Stack = createNativeStackNavigator();
@@ -51,7 +52,9 @@ const LoginScreen = ({navigation}) => {
 };
 const ProfileScreen = ({navigation, route}) => {
   return(
-      <View></View>
+      <View>
+        <Calendar/>
+      </View>
     
     
 
