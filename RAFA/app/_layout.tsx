@@ -19,11 +19,11 @@ const SignUpScreen = ({navigation, route}) =>{
   return (
     <View style = {styles.container}>
       <View style = {styles.view}> 
-        <InputText placeHolder = "Email"/>
-        <InputText placeHolder = "Username"/>
-        <InputText placeHolder="Password"/>
+        <InputText placeHolder = "Email" value = {blank} setValue={onChangeEmail}/>
+        <InputText placeHolder = "Username" value = {blank2} setValue={onChangeUsername}/>
+        <InputText placeHolder="Password" value = {blank3} setValue = {onChangePassword}/>
         <Separator/>
-        <Button label="Sign Up" navigation={navigation} page='Terms and Agreement' name="Terms" disabled={undefined}/>
+        <Button label="Sign Up" navigation={navigation} page='Terms and Agreement' name="Terms" disabled={blank==""||blank2==""||blank3==""}/>
       
       </View>
     </View>
@@ -31,13 +31,15 @@ const SignUpScreen = ({navigation, route}) =>{
   );
 }
 const LoginScreen = ({navigation}) => {
+  const[blank, onChangeUsername] = React.useState('')
+  const[blank2, onChangePassword] = React.useState('')
   return (
     <View style = {styles.container}>
       <View style = {styles.view}>
-        <InputText placeHolder="Username"/>
-        <InputText placeHolder="Password"/>
+        <InputText placeHolder="Username" value = {blank} setValue={onChangeUsername}/>
+        <InputText placeHolder="Password" value = {blank2} setValue = {onChangePassword}/>
       <View style = {styles.viewRow}>
-        <Button label="Login" navigation={navigation} page='Profile' name="picture" disabled={undefined}/>
+        <Button label="Login" navigation={navigation} page='Profile' name="picture" disabled={blank==""||blank2==""}/>
           <Separator/>
         <Button label="Sign Up" navigation={navigation} page='Sign Up' name="Sign Up" disabled={undefined}/>
       </View>
