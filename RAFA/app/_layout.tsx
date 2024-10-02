@@ -53,7 +53,7 @@ const LoginScreen = ({navigation}) => {
 const ProfileScreen = ({navigation, route}) => {
   const [selected, setSelected] = useState('');
   return(
-      <View style = {styles.container}>
+      <View style = {[styles.container, {padding:10}] }>
         {/* <Calendar onDayPress={day => {
         setSelected(day.dateString);
       }}
@@ -61,6 +61,12 @@ const ProfileScreen = ({navigation, route}) => {
         [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}
       }}/> */}
         <AgendaInfiniteListScreen/>
+        <Pressable style = {{backgroundColor:'lightblue', borderWidth:10, borderColor:'lightblue'}}>
+          <Text>
+            add event
+          </Text>
+        </Pressable>
+        
       </View>
     
     
