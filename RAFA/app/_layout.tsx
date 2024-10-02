@@ -7,7 +7,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Button from './Button'
 import InputText from './InputText'
 import {Calendar} from 'react-native-calendars'
-
+import AgendaInfiniteListScreen from './Agenda';
 
 const Stack = createNativeStackNavigator();
 const Separator = () => <View style = {styles.separator}/>
@@ -53,13 +53,14 @@ const LoginScreen = ({navigation}) => {
 const ProfileScreen = ({navigation, route}) => {
   const [selected, setSelected] = useState('');
   return(
-      <View>
-        <Calendar onDayPress={day => {
+      <View style = {styles.container}>
+        {/* <Calendar onDayPress={day => {
         setSelected(day.dateString);
       }}
       markedDates={{
         [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}
-      }}/>
+      }}/> */}
+        <AgendaInfiniteListScreen/>
       </View>
     
     
