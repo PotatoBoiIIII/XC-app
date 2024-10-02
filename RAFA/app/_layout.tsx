@@ -51,9 +51,15 @@ const LoginScreen = ({navigation}) => {
   );
 };
 const ProfileScreen = ({navigation, route}) => {
+  const [selected, setSelected] = useState('');
   return(
       <View>
-        <Calendar/>
+        <Calendar onDayPress={day => {
+        setSelected(day.dateString);
+      }}
+      markedDates={{
+        [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}
+      }}/>
       </View>
     
     
