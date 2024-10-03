@@ -1,5 +1,5 @@
 //import { Stack } from "expo-router";
-import {Text, Image, View, TextInput, StyleSheet, SafeAreaView, ImageBackground, Pressable, ScrollView, Switch, Modal} from 'react-native'
+import {Text, Image, View, TextInput, StyleSheet, SafeAreaView, ImageBackground, Pressable, ScrollView, Switch, Modal, Alert} from 'react-native'
 import {useState} from 'react'
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
@@ -52,7 +52,7 @@ const LoginScreen = ({navigation}) => {
 };
 const ProfileScreen = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [name, setname] = useState('')
   const [selected, setSelected] = useState('');
   return(
       <View style = {[styles.container, {padding:10}] }>
@@ -64,14 +64,16 @@ const ProfileScreen = ({navigation, route}) => {
           Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
+        <View style={[styles.container, {backgroundColor: 'lightblue'}]}>
+          <View>
+            <Text>Hello World!</Text>
             <Pressable
-              style={[styles.button, styles.buttonClose]}
+              
               onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text>Hide Modal</Text>
             </Pressable>
+            <InputText placeHolder="event name" value={name} setValue={setname} />
+            
           </View>
         </View>
       </Modal>
