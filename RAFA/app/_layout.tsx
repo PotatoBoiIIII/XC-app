@@ -17,8 +17,8 @@ const Separator = () => <View style = {styles.separator}/>
 
 const LoginForm = ({navigation}) =>{
   const [click,setClick] = useState(false);
-  const {username,setUsername} = useState("");
-  const {password,setPassword} =  useState("");
+  const [username,setUsername] = useState("");
+  const [password,setPassword] =  useState("");
 return (
   <SafeAreaView style={styles.container}>
       
@@ -31,18 +31,18 @@ return (
       </View>
       <View style={styles.rememberView}>
           <View style={styles.switch}>
-              <Switch  value={click} onValueChange={setClick} trackColor={{true : "lightblue" , false : "gray"}} />
+              <Switch  value={click} onValueChange={setClick} trackColor={{true : "lightblue" , false : "gray"}} navigation/>
               <Text style={styles.rememberText}>Remember Me</Text>
           </View>
           <View>
-              <Pressable onPress={() => navigation.navigate(CalendarScreen, {name:'Calendar'})}>
+              <Pressable onPress={() => navigation.navigate('Calendar', {name:'Calendar'})}>
                   <Text style={styles.forgetText}>Forgot Password?</Text>
               </Pressable>
           </View>
       </View>
 
       <View style={styles.buttonView}>
-          <Pressable style={styles.button} disabled = {false} onPress={() => navigation.navigate(CalendarScreen, {name: 'Calendar'})}>
+          <Pressable style={styles.button} disabled = {false} onPress={() => navigation.navigate('Calendar', {name: 'Calendar'})}>
               <Text style={styles.buttonText}>LOGIN</Text>
           </Pressable>
           <Text style={styles.optionsText}>OR LOGIN WITH</Text>
@@ -53,7 +53,7 @@ return (
         <Pressable style={({pressed}) => [
           {
             backgroundColor: pressed ? 'red' : 'white',
-          }]} onPress={()=> navigation.navigate(SignUpScreen, {name:'Sign Up'})}>
+          }]} onPress={()=> navigation.navigate('Sign Up', {name:'Sign Up'})}>
             <Text style={styles.signup}>  Sign up </Text>
         </Pressable>
         </Text>
@@ -253,7 +253,7 @@ const TermsScreen  = ({navigation, route} )=> {
         </View>
       
         <Separator/>
-        <View style = {styles.viewRow}>
+        <View style = {[styles.container, {flexDirection:'row'}]}>
           <Switch trackColor={{false: '#767577', true: '#81b0ff'}}
           thumbColor={isEnabled ? '#add8e6' : '#f4f3f4'}
           ios_backgroundColor="#add8e6"
