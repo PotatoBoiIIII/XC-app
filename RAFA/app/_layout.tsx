@@ -1,4 +1,3 @@
-//import { Stack } from "expo-router";
 import {Text, Image, View, TextInput, StyleSheet, SafeAreaView, ImageBackground, Pressable, ScrollView, Switch, Modal, Alert, RefreshControl} from 'react-native'
 import {useState} from 'react'
 import * as React from 'react';
@@ -11,14 +10,62 @@ import AgendaInfiniteListScreen from './Agenda';
 import {agendaItems} from '../mocks/agendaItems'
 import {dates} from '../mocks/agendaItems'
 
+
 const Stack = createNativeStackNavigator();
 const Separator = () => <View style = {styles.separator}/>
 
+
+const LoginForm = ({navigation}) =>{
+  const [click,setClick] = useState(false);
+  const {username,setUsername} = useState("");
+  const {password,setPassword} =  useState("");
+return (
+  <SafeAreaView style={styles.container}>
+      
+      <Text style={styles.title}>Login</Text>
+      <View style={styles.inputView}>
+          <TextInput style={styles.input} placeholder='EMAIL OR USERNAME' value={username} onChangeText={setUsername} autoCorrect={false}
+      autoCapitalize='none' />
+          <TextInput style={styles.input} placeholder='PASSWORD' secureTextEntry value={password} onChangeText={setPassword} autoCorrect={false}
+      autoCapitalize='none'/>
+      </View>
+      <View style={styles.rememberView}>
+          <View style={styles.switch}>
+              <Switch  value={click} onValueChange={setClick} trackColor={{true : "lightblue" , false : "gray"}} />
+              <Text style={styles.rememberText}>Remember Me</Text>
+          </View>
+          <View>
+              <Pressable onPress={() => navigation.navigate(CalendarScreen, {name:'Calendar'})}>
+                  <Text style={styles.forgetText}>Forgot Password?</Text>
+              </Pressable>
+          </View>
+      </View>
+
+      <View style={styles.buttonView}>
+          <Pressable style={styles.button} disabled = {false} onPress={() => navigation.navigate(CalendarScreen, {name: 'Calendar'})}>
+              <Text style={styles.buttonText}>LOGIN</Text>
+          </Pressable>
+          <Text style={styles.optionsText}>OR LOGIN WITH</Text>
+      </View>
+
+      <View>
+        <Text style={styles.footerText}>Don't Have Account?
+        <Pressable style={({pressed}) => [
+          {
+            backgroundColor: pressed ? 'red' : 'white',
+          }]} onPress={()=> navigation.navigate(SignUpScreen, {name:'Sign Up'})}>
+            <Text style={styles.signup}>  Sign up </Text>
+        </Pressable>
+        </Text>
+      </View>
+      
+  </SafeAreaView>
+)
+}
 const SignUpScreen = ({navigation, route}) =>{
   const[blank, onChangeEmail] = React.useState('')
   const[blank2, onChangeUsername] = React.useState('')
   const[blank3, onChangePassword] = React.useState('')
-  
   return (
     <View style = {styles.container}>
       <View style = {styles.view}> 
@@ -32,26 +79,7 @@ const SignUpScreen = ({navigation, route}) =>{
     </View>
     
   );
-}
-const LoginScreen = ({navigation}) => {
-  const[blank, onChangeUsername] = React.useState('')
-  const[blank2, onChangePassword] = React.useState('')
-  return (
-    <View style = {styles.container}>
-      <View style = {styles.view}>
-        <InputText placeHolder="Username" value = {blank} setValue={onChangeUsername} spaces={false}/>
-        <InputText placeHolder="Password" value = {blank2} setValue = {onChangePassword} spaces={false}/>
-      <View style = {styles.viewRow}>
-        <Button label="Login" navigation={navigation} page='Calendar' name="calendar" disabled={blank==""||blank2==""}/>
-          <Separator/>
-        <Button label="Sign Up" navigation={navigation} page='Sign Up' name="Sign Up" disabled={undefined}/>
-      </View>
-      
-      </View>
-    </View>
-    
-  );
-};
+ }
 const CalendarScreen = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setname] = useState('')
@@ -168,7 +196,7 @@ const TermsScreen  = ({navigation, route} )=> {
   return(
     <View style = {styles.container}>
       <View style = {styles.view}>
-        <Image source = {require('../assets/images/falcon.png')} style = {{resizeMode:'contain', flex:1, backgroundColor:'lightblue', objectFit:'scale-down'}}/>
+        
         <View style = {[styles.container, {flex:6}]}>
           <ScrollView style = {{borderWidth:3, borderColor:'lightblue', padding: 30, flex:6}}>
             <Text>please work</Text>
@@ -250,8 +278,8 @@ export default function RootLayout() {
     <NavigationContainer independent={true}>
       <Stack.Navigator>
         <Stack.Screen
-          name="loginScreen"
-          component={LoginScreen}
+          name="loginForm"
+          component={LoginForm}
           options={{title: 'Welcome to RAFA!', headerStyle: {backgroundColor: 'lightblue'}, }}
         />
         <Stack.Screen name="Calendar" component={CalendarScreen} options={{headerStyle:{backgroundColor:'lightblue'}}}/>
@@ -263,6 +291,81 @@ export default function RootLayout() {
 }
 
 const styles = StyleSheet.create({
+  title : {
+    fontSize : 30,
+    fontWeight : "bold",
+    textTransform : "uppercase",
+    textAlign: "center",
+    paddingVertical : 40,
+    color : "blue"
+  },
+  inputView : {
+    gap : 15,
+    width : "100%",
+    paddingHorizontal : 40,
+    marginBottom  :5
+  },
+  input : {
+    height : 50,
+    paddingHorizontal : 20,
+    borderColor : "blue",
+    borderWidth : 1,
+    borderRadius: 7
+  },
+  rememberView : {
+    width : "100%",
+    paddingHorizontal : 50,
+    justifyContent: "space-between",
+    alignItems : "center",
+    flexDirection : "row",
+    marginBottom : 8
+  },
+  switch :{
+    flexDirection : "row",
+    gap : 1,
+    justifyContent : "center",
+    alignItems : "center",
+  },
+  rememberText : {
+    fontSize: 13
+  },
+  forgetText : {
+    fontSize : 11,
+    color : "blue"
+  },
+  button : {
+    backgroundColor : "blue",
+    height : 45,
+    borderColor : "bl",
+    borderWidth  : 1,
+    borderRadius : 5,
+    alignItems : "center",
+    justifyContent : "center"
+  },
+  buttonText : {
+    color : "white"  ,
+    fontSize: 18,
+    fontWeight : "bold"
+  }, 
+  buttonView :{
+    width :"100%",
+    paddingHorizontal : 50
+  },
+  optionsText : {
+    textAlign : "center",
+    paddingVertical : 10,
+    color : "gray",
+    fontSize : 13,
+    marginBottom : 6
+  },
+  footerText : {
+    textAlign: "center",
+    color : "gray",
+  },
+  signup : {
+    color : "blue",
+    fontSize : 13
+  },
   separator:{
     marginVertical: 8,
     borderBottomColor: '#737373',
@@ -273,7 +376,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex:1,
     padding:0
-
   },
   view:{
     alignItems:'center',
@@ -285,10 +387,4 @@ const styles = StyleSheet.create({
     margin:0,
     width:'100%'
   },
-  viewRow:{
-    alignItems:'center',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  }
-
 })
