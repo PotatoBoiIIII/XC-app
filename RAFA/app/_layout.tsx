@@ -98,7 +98,7 @@ const CalendarScreen = ({navigation, route}) => {
   }, []);
   return(
     //<View style = {[styles.container, {flexDirection:'row'}]}>
-    <View style = {[styles.container, {flex:1}] }>
+    <View style = {[styles.container] }>
         
 
         
@@ -120,13 +120,13 @@ const CalendarScreen = ({navigation, route}) => {
             <InputText placeHolder="Duration" value={duration} setValue={setDuration} spaces={true}/>
             <InputText placeHolder="Info" value={info} setValue={setInfo} spaces={true}/>
             <View style = {[styles.buttonView, {flexDirection:'row', alignItems:'center', justifyContent:'space-evenly',}]}>
-            <Pressable onPress={()=> agendaItems.push({title:date, data:[{hour:String(time), duration:String(duration), title:String(name), info:String(info)}]}) && setModalVisible(!modalVisible)} style = {{backgroundColor:'lightblue', borderWidth:10, borderColor:'lightblue'}} disabled = {name==""||time==""||date==""||duration=="" ? true:false}>
-              <Text>
+            <Pressable onPress={()=> agendaItems.push({title:date, data:[{hour:String(time), duration:String(duration), title:String(name), info:String(info)}]}) && setModalVisible(!modalVisible)} style={styles.button} disabled = {name==""||time==""||date==""||duration=="" ? true:false}>
+              <Text style = {styles.buttonText}>
                 add event
               </Text>
             </Pressable>
             <Pressable onPress={()=>setModalVisible(!modalVisible)} style = {styles.button}>
-              <Text>
+              <Text style = {styles.buttonText}>
                 Exit
               </Text>
             </Pressable>
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     justifyContent : "center"
   },
   buttonText : {
-    color : "white"  ,
+    color : "black"  ,
     fontSize: 18,
     fontWeight : "bold"
   }, 
