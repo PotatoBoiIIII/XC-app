@@ -1,5 +1,5 @@
 //import { Stack } from "expo-router";
-import {Text, Image, View, TextInput, StyleSheet, SafeAreaView, ImageBackground, Pressable, ScrollView, Switch, Modal, Alert} from 'react-native'
+import {Text, Image, View, TextInput, StyleSheet, SafeAreaView, ImageBackground, Pressable, ScrollView, Switch, Modal, Alert, RefreshControl} from 'react-native'
 import {useState} from 'react'
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
@@ -8,6 +8,8 @@ import Button from './Button'
 import InputText from './InputText'
 import {Calendar} from 'react-native-calendars'
 import AgendaInfiniteListScreen from './Agenda';
+import {agendaItems} from '../mocks/agendaItems'
+import {dates} from '../mocks/agendaItems'
 
 const Stack = createNativeStackNavigator();
 const Separator = () => <View style = {styles.separator}/>
@@ -53,9 +55,24 @@ const LoginScreen = ({navigation}) => {
 const ProfileScreen = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setname] = useState('')
+  const [time, setTime] = useState('')
+  const [date, setDate] = useState('')
+  const [duration, setDuration] = useState('')
   const [selected, setSelected] = useState('');
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
   return(
-      <View style = {[styles.container, {padding:10}] }>
+    //<View style = {[styles.container, {flexDirection:'row'}]}>
+    <View style = {[styles.container, {flex:1}] }>
+        
+
+        
         <Modal
         animationType="slide"
         transparent={true}
@@ -73,6 +90,14 @@ const ProfileScreen = ({navigation, route}) => {
               <Text>Hide Modal</Text>
             </Pressable>
             <InputText placeHolder="event name" value={name} setValue={setname} />
+            <InputText placeHolder="Time" value={time} setValue={setTime} />
+            <InputText placeHolder="Date" value={date} setValue={setDate} />
+            <InputText placeHolder="Duration" value={duration} setValue={setDuration} />
+            <Pressable onPress={()=> agendaItems.push({title:dates[2], data:[{hour:String(time), duration:String(duration), title:String(name)}]}) && setModalVisible(!modalVisible)}>
+              <Text>
+                add event
+              </Text>
+            </Pressable>
             
           </View>
         </View>
@@ -83,8 +108,56 @@ const ProfileScreen = ({navigation, route}) => {
         <Text>Add Event</Text>
       </Pressable>
         <AgendaInfiniteListScreen/>
+     
         
         
+        {/* <ScrollView contentContainerStyle = {{flex:1}}
+      refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          
+      }>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+
+
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+
+
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+        <Text>refresg</Text>
+
+      </ScrollView>  */}
       </View>
     
     

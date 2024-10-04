@@ -68,7 +68,7 @@ export default AgendaInfiniteListScreen;
 const styles = StyleSheet.create({
   calendar: {
     paddingLeft: 20,
-    paddingRight: 20,
+    paddingRight: 20, 
     flex:1
   },
   header: {
