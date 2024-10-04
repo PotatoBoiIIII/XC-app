@@ -22,9 +22,9 @@ const SignUpScreen = ({navigation, route}) =>{
   return (
     <View style = {styles.container}>
       <View style = {styles.view}> 
-        <InputText placeHolder = "Email" value = {blank} setValue={onChangeEmail}/>
-        <InputText placeHolder = "Username" value = {blank2} setValue={onChangeUsername}/>
-        <InputText placeHolder="Password" value = {blank3} setValue = {onChangePassword}/>
+        <InputText placeHolder = "Email" value = {blank} setValue={onChangeEmail} spaces={false}/>
+        <InputText placeHolder = "Username" value = {blank2} setValue={onChangeUsername} spaces={false}/>
+        <InputText placeHolder="Password" value = {blank3} setValue = {onChangePassword} spaces={false}/>
         <Separator/>
         <Button label="Sign Up" navigation={navigation} page='Terms and Agreement' name="Terms" disabled={blank==""||blank2==""||blank3==""}/>
       
@@ -39,10 +39,10 @@ const LoginScreen = ({navigation}) => {
   return (
     <View style = {styles.container}>
       <View style = {styles.view}>
-        <InputText placeHolder="Username" value = {blank} setValue={onChangeUsername}/>
-        <InputText placeHolder="Password" value = {blank2} setValue = {onChangePassword}/>
+        <InputText placeHolder="Username" value = {blank} setValue={onChangeUsername} spaces={false}/>
+        <InputText placeHolder="Password" value = {blank2} setValue = {onChangePassword} spaces={false}/>
       <View style = {styles.viewRow}>
-        <Button label="Login" navigation={navigation} page='Profile' name="picture" disabled={blank==""||blank2==""}/>
+        <Button label="Login" navigation={navigation} page='Calendar' name="calendar" disabled={blank==""||blank2==""}/>
           <Separator/>
         <Button label="Sign Up" navigation={navigation} page='Sign Up' name="Sign Up" disabled={undefined}/>
       </View>
@@ -52,7 +52,7 @@ const LoginScreen = ({navigation}) => {
     
   );
 };
-const ProfileScreen = ({navigation, route}) => {
+const CalendarScreen = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setname] = useState('')
   const [time, setTime] = useState('')
@@ -81,19 +81,14 @@ const ProfileScreen = ({navigation, route}) => {
           Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
-        <View style={[styles.container, {backgroundColor: 'lightblue'}]}>
+        <View style={[styles.container, {backgroundColor: 'white'}]}>
           <View>
-            <Text>Hello World!</Text>
-            <Pressable
-              
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text>Hide Modal</Text>
-            </Pressable>
-            <InputText placeHolder="event name" value={name} setValue={setname} />
-            <InputText placeHolder="Time" value={time} setValue={setTime} />
-            <InputText placeHolder="Date: MM/DD/YYYY" value={date} setValue={setDate} />
-            <InputText placeHolder="Duration" value={duration} setValue={setDuration} />
-            <Pressable onPress={()=> agendaItems.push({title:date, data:[{hour:String(time), duration:String(duration), title:String(name)}]}) && setModalVisible(!modalVisible)}>
+            
+            <InputText placeHolder="event name" value={name} setValue={setname} spaces={true}/>
+            <InputText placeHolder="Time" value={time} setValue={setTime} spaces={true}/>
+            <InputText placeHolder="Date: MM/DD/YYYY" value={date} setValue={setDate} spaces={true}/>
+            <InputText placeHolder="Duration" value={duration} setValue={setDuration} spaces={true}/>
+            <Pressable onPress={()=> agendaItems.push({title:date, data:[{hour:String(time), duration:String(duration), title:String(name)}]}) && setModalVisible(!modalVisible)} style = {{backgroundColor:'lightblue', borderWidth:10, borderColor:'lightblue'}}>
               <Text>
                 add event
               </Text>
@@ -241,7 +236,7 @@ const TermsScreen  = ({navigation, route} )=> {
               <Text >I agree to the</Text>
               <Text >Terms and Agreement</Text>
             </View>
-          <Button label = "Continue" navigation = {navigation} page = "Profile" name = "picture" disabled = {!isEnabled} />
+          <Button label = "Continue" navigation = {navigation} page = "Calendar" name = "calendar" disabled = {!isEnabled} />
         </View>
       
       </View>
@@ -259,7 +254,7 @@ export default function RootLayout() {
           component={LoginScreen}
           options={{title: 'Welcome to RAFA!', headerStyle: {backgroundColor: 'lightblue'}, }}
         />
-        <Stack.Screen name="Profile" component={ProfileScreen} options={{headerStyle:{backgroundColor:'lightblue'}}}/>
+        <Stack.Screen name="Calendar" component={CalendarScreen} options={{headerStyle:{backgroundColor:'lightblue'}}}/>
         <Stack.Screen name = "Sign Up" component = {SignUpScreen} options={{headerStyle:{backgroundColor:'lightblue'}}}/>
         <Stack.Screen name = "Terms and Agreement" component = {TermsScreen} options={{headerStyle:{backgroundColor:'lightblue'}}}/>
       </Stack.Navigator> 

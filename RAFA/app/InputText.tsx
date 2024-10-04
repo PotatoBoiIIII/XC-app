@@ -1,11 +1,11 @@
 import {Text, TextInput, StyleSheet} from 'react-native'
 import React from 'react'
-export default function InputText({placeHolder, value, setValue}){
+export default function InputText({placeHolder, value, setValue, spaces}){
     return(
         <TextInput 
           style = {styles.input}
           onChangeText = {setValue}
-          value = {value.replaceAll(" ", "")}
+          value = {spaces? value : value.replaceAll(" ", "")}
           placeholder= {placeHolder}
           placeholderTextColor={'grey'}
         />
