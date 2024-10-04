@@ -28,13 +28,13 @@ function getPastDate(numberOfDays: number) {
 export const agendaItems = [
  {
    title: dates[0],
-    data: [{hour: '12am', duration: '1h', title: 'First Yoga'}, {hour: '9am', duration: '1h', title: 'Long Yoga', itemCustomHeightType: 'LongEvent'}],
+    data: [{hour: '12am', duration: '1h', title: 'morning practice'}, {hour: '9am', duration: '1h', title: 'Long Run', itemCustomHeightType: 'LongEvent'}],
    },
   {
     title: dates[1],
     data: [
-    {hour: '4pm', duration: '1h', title: 'Pilates ABC'},
-      {hour: '5pm', duration: '1h', title: 'Vinyasa Yoga'}
+    {hour: '7am', duration: '1h', title: 'mile repeats'},
+      {hour: '2:30', duration: '1h', title: 'afternoon double'}
     ]
  },
   // {

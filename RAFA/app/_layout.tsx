@@ -91,9 +91,9 @@ const ProfileScreen = ({navigation, route}) => {
             </Pressable>
             <InputText placeHolder="event name" value={name} setValue={setname} />
             <InputText placeHolder="Time" value={time} setValue={setTime} />
-            <InputText placeHolder="Date" value={date} setValue={setDate} />
+            <InputText placeHolder="Date: MM/DD/YYYY" value={date} setValue={setDate} />
             <InputText placeHolder="Duration" value={duration} setValue={setDuration} />
-            <Pressable onPress={()=> agendaItems.push({title:dates[2], data:[{hour:String(time), duration:String(duration), title:String(name)}]}) && setModalVisible(!modalVisible)}>
+            <Pressable onPress={()=> agendaItems.push({title:date, data:[{hour:String(time), duration:String(duration), title:String(name)}]}) && setModalVisible(!modalVisible)}>
               <Text>
                 add event
               </Text>
