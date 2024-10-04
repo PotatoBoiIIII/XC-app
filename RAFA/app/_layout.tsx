@@ -106,23 +106,31 @@ const CalendarScreen = ({navigation, route}) => {
         animationType="slide"
         transparent={true}
         visible={modalVisible}
+        
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
-        <View style={[styles.container, {backgroundColor: 'white'}]}>
-          <View>
+        <View style={styles.container}>
+          <View style = {[styles.container,{backgroundColor:'white', width:'50%'}]}>
             
             <InputText placeHolder="event name" value={name} setValue={setname} spaces={true}/>
             <InputText placeHolder="Time" value={time} setValue={setTime} spaces={true}/>
             <InputText placeHolder="Date: MM/DD/YYYY" value={date} setValue={setDate} spaces={true}/>
             <InputText placeHolder="Duration" value={duration} setValue={setDuration} spaces={true}/>
             <InputText placeHolder="Info" value={info} setValue={setInfo} spaces={true}/>
-            <Pressable onPress={()=> agendaItems.push({title:date, data:[{hour:String(time), duration:String(duration), title:String(name), info:String(info)}]}) && setModalVisible(!modalVisible)} style = {{backgroundColor:'lightblue', borderWidth:10, borderColor:'lightblue'}}>
+            <View style = {[styles.buttonView, {flexDirection:'row', alignItems:'center', justifyContent:'space-evenly',}]}>
+            <Pressable onPress={()=> agendaItems.push({title:date, data:[{hour:String(time), duration:String(duration), title:String(name), info:String(info)}]}) && setModalVisible(!modalVisible)} style = {{backgroundColor:'lightblue', borderWidth:10, borderColor:'lightblue'}} disabled = {name==""||time==""||date==""||duration=="" ? true:false}>
               <Text>
                 add event
               </Text>
             </Pressable>
+            <Pressable onPress={()=>setModalVisible(!modalVisible)} style = {styles.button}>
+              <Text>
+                Exit
+              </Text>
+            </Pressable>
+            </View>
             
           </View>
         </View>
@@ -133,56 +141,6 @@ const CalendarScreen = ({navigation, route}) => {
         <Text>Add Event</Text>
       </Pressable>
         <AgendaInfiniteListScreen/>
-     
-        
-        
-        {/* <ScrollView contentContainerStyle = {{flex:1}}
-      refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          
-      }>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-
-
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-
-
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-        <Text>refresg</Text>
-
-      </ScrollView>  */}
       </View>
     
     
@@ -336,10 +294,10 @@ const styles = StyleSheet.create({
     color : "blue"
   },
   button : {
-    backgroundColor : "blue",
+    backgroundColor : "lightblue",
     height : 45,
-    borderColor : "bl",
-    borderWidth  : 1,
+    borderColor : "lightblue",
+    borderWidth  : 5,
     borderRadius : 5,
     alignItems : "center",
     justifyContent : "center"

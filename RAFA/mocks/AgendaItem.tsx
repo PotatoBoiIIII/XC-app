@@ -41,12 +41,12 @@ const AgendaItem = (props: ItemProps) => {
           setModalVisible(!modalVisible);
         }}>
        
-        <View style = {{backgroundColor:'white',flex:1, alignItems:'center'}}>
+        <View style = {{backgroundColor:'white',flex:1, alignItems:'center', justifyContent:'center'}}>
         
-          <Text>
-            {item.info}
+          <Text style = {{borderWidth:1, borderColor:'bl', margin:10, borderRadius:5, padding:10}}>
+            {item.info==null ? "no info":item.info}
           </Text>
-          <Pressable style = {{backgroundColor:'lightblue', width:30}} onPress={()=> setModalVisible(!modalVisible)}>
+          <Pressable style = {{backgroundColor:'lightblue', borderWidth:10, borderColor:'lightblue', borderRadius:5}} onPress={()=> setModalVisible(!modalVisible)}>
           <Text>
             Exit
           </Text>
