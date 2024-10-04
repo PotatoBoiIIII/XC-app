@@ -85,6 +85,7 @@ const CalendarScreen = ({navigation, route}) => {
   const [name, setname] = useState('')
   const [time, setTime] = useState('')
   const [date, setDate] = useState('')
+  const [info, setInfo] = useState('')
   const [duration, setDuration] = useState('')
   const [selected, setSelected] = useState('');
   const [refreshing, setRefreshing] = React.useState(false);
@@ -116,7 +117,8 @@ const CalendarScreen = ({navigation, route}) => {
             <InputText placeHolder="Time" value={time} setValue={setTime} spaces={true}/>
             <InputText placeHolder="Date: MM/DD/YYYY" value={date} setValue={setDate} spaces={true}/>
             <InputText placeHolder="Duration" value={duration} setValue={setDuration} spaces={true}/>
-            <Pressable onPress={()=> agendaItems.push({title:date, data:[{hour:String(time), duration:String(duration), title:String(name)}]}) && setModalVisible(!modalVisible)} style = {{backgroundColor:'lightblue', borderWidth:10, borderColor:'lightblue'}}>
+            <InputText placeHolder="Info" value={info} setValue={setInfo} spaces={true}/>
+            <Pressable onPress={()=> agendaItems.push({title:date, data:[{hour:String(time), duration:String(duration), title:String(name), info:String(info)}]}) && setModalVisible(!modalVisible)} style = {{backgroundColor:'lightblue', borderWidth:10, borderColor:'lightblue'}}>
               <Text>
                 add event
               </Text>

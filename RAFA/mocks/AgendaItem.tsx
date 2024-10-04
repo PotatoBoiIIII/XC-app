@@ -1,6 +1,6 @@
 import isEmpty from 'lodash/isEmpty';
-import React, {useCallback} from 'react';
-import {StyleSheet, Alert, View, Text, TouchableOpacity, Button} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {StyleSheet, Alert, View, Text, TouchableOpacity, Button, Modal, Pressable} from 'react-native';
 import testIDs from '../assets/testIDs';
 
 
@@ -11,9 +11,11 @@ interface ItemProps {
 const AgendaItem = (props: ItemProps) => {
   const {item} = props;
 
-  const buttonPressed = useCallback(() => {
-    Alert.alert('Show me more');
-  }, []);
+  const buttonPressed =() => {
+    
+    <View>
+    </View>
+  };
 
   const itemPressed = useCallback(() => {
     Alert.alert(item.title);
@@ -26,8 +28,35 @@ const AgendaItem = (props: ItemProps) => {
       </View>
     );
   }
-
+  const [modalVisible, setModalVisible] = useState(false);
   return (
+    <View>
+      
+    <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+       
+        <View style = {{backgroundColor:'white',flex:1, alignItems:'center'}}>
+        
+          <Text>
+            {item.info}
+          </Text>
+          <Pressable style = {{backgroundColor:'lightblue', width:30}} onPress={()=> setModalVisible(!modalVisible)}>
+          <Text>
+            Exit
+          </Text>
+        </Pressable>
+        </View>
+  
+       
+
+        </Modal>
+  
     <TouchableOpacity onPress={itemPressed} style={styles.item} testID={testIDs.agenda.ITEM}>
       <View>
         <Text style={styles.itemHourText}>{item.hour}</Text>
@@ -35,9 +64,10 @@ const AgendaItem = (props: ItemProps) => {
       </View>
       <Text style={styles.itemTitleText}>{item.title}</Text>
       <View style={styles.itemButtonContainer}>
-        <Button color={'grey'} title={'Info'} onPress={buttonPressed}/>
+        <Button color={'grey'} title={'Info'} onPress={()=>setModalVisible(!modalVisible)}/>
       </View>
     </TouchableOpacity>
+    </View>
   );
 };
 
