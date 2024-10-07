@@ -1,6 +1,12 @@
 import isEmpty from 'lodash/isEmpty';
 import {MarkedDates} from '../assets/types';
 
+
+const WHITE='#ffffff'
+const BLACK='#000000'
+const DARKBLUE='#081c64'
+const LIGHTBLUE='#92c0e2'
+const BLUEGREY = '#adc3d1'
 const today = new Date().toISOString().split('T')[0];
 const fastDate = getPastDate(4);
 const futureDates = getFutureDates(990);

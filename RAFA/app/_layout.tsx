@@ -10,7 +10,11 @@ import AgendaInfiniteListScreen from './Agenda';
 import {agendaItems} from '../mocks/agendaItems'
 import {dates} from '../mocks/agendaItems'
 
-
+const WHITE='#ffffff'
+const BLACK='#000000'
+const DARKBLUE='#081c64'
+const LIGHTBLUE='#92C0E2'
+const BLUEGREY = '#adc3d1'
 const Stack = createNativeStackNavigator();
 const Separator = () => <View style = {styles.separator}/>
 
@@ -35,7 +39,7 @@ return (
               <Text style={styles.rememberText}>Remember Me</Text>
           </View>
           <View>
-              <Pressable onPress={() => navigation.navigate('Calendar', {name:'Calendar'})}>
+              <Pressable onPress={() => navigation.navigate('RefreshText', {name:'Refresh'})}>
                   <Text style={styles.forgetText}>Forgot Password?</Text>
               </Pressable>
           </View>
@@ -61,6 +65,82 @@ return (
       
   </SafeAreaView>
 )
+}
+const RefreshControlTest = ({navigation}) =>{
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+
+        <Text>Pull down to see RefreshControl indicator</Text><Text>Pull down to see RefreshControl indicator</Text>
+
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+
+
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+        <Text>Pull down to see RefreshControl indicator</Text>
+
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
 const SignUpScreen = ({navigation, route}) =>{
   const[blank, onChangeEmail] = React.useState('')
@@ -116,7 +196,7 @@ const CalendarScreen = ({navigation, route}) => {
             
             <InputText placeHolder="event name" value={name} setValue={setname} spaces={true}/>
             <InputText placeHolder="Time" value={time} setValue={setTime} spaces={true}/>
-            <InputText placeHolder="Date: MM/DD/YYYY" value={date} setValue={setDate} spaces={true}/>
+            <InputText placeHolder="Date: YYYY/MM/DD" value={date} setValue={setDate} spaces={true}/>
             <InputText placeHolder="Duration" value={duration} setValue={setDuration} spaces={true}/>
             <InputText placeHolder="Info" value={info} setValue={setInfo} spaces={true}/>
             <View style = {[styles.buttonView, {flexDirection:'row', alignItems:'center', justifyContent:'space-evenly',}]}>
@@ -136,7 +216,7 @@ const CalendarScreen = ({navigation, route}) => {
         </View>
       </Modal>
       <Pressable
-        style={{backgroundColor:'lightblue', borderWidth:10, borderColor:'lightblue'}}
+        style={{backgroundColor:LIGHTBLUE, borderWidth:10, borderColor:LIGHTBLUE}}
         onPress={() => setModalVisible(true)}>
         <Text>Add Event</Text>
       </Pressable>
@@ -158,7 +238,7 @@ const TermsScreen  = ({navigation, route} )=> {
       <View style = {styles.view}>
         
         <View style = {[styles.container, {flex:6}]}>
-          <ScrollView style = {{borderWidth:3, borderColor:'lightblue', padding: 30, flex:6}}>
+          <ScrollView style = {{borderWidth:3, borderColor:LIGHTBLUE, padding: 30, flex:6}}>
             <Text>please work</Text>
             <Text>please work</Text>
             <Text>please work</Text>
@@ -240,11 +320,12 @@ export default function RootLayout() {
         <Stack.Screen
           name="loginForm"
           component={LoginForm}
-          options={{title: 'Welcome to RAFA!', headerStyle: {backgroundColor: 'lightblue'}, }}
+          options={{title: 'Welcome to RAFA!', headerStyle: {backgroundColor: LIGHTBLUE}, }}
         />
-        <Stack.Screen name="Calendar" component={CalendarScreen} options={{headerStyle:{backgroundColor:'lightblue'}}}/>
-        <Stack.Screen name = "Sign Up" component = {SignUpScreen} options={{headerStyle:{backgroundColor:'lightblue'}}}/>
-        <Stack.Screen name = "Terms and Agreement" component = {TermsScreen} options={{headerStyle:{backgroundColor:'lightblue'}}}/>
+        <Stack.Screen name="Calendar" component={CalendarScreen} options={{headerStyle:{backgroundColor:LIGHTBLUE}}}/>
+        <Stack.Screen name = "Sign Up" component = {SignUpScreen} options={{headerStyle:{backgroundColor:LIGHTBLUE}}}/>
+        <Stack.Screen name = "Terms and Agreement" component = {TermsScreen} options={{headerStyle:{backgroundColor:LIGHTBLUE}}}/>
+        <Stack.Screen name = "RefreshText" component = {RefreshControlTest} options={ {headerStyle:{backgroundColor:LIGHTBLUE}}}/>
       </Stack.Navigator> 
     </NavigationContainer>
   );
@@ -341,10 +422,16 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent: 'center',
     borderWidth: 3,
-    borderColor: 'lightblue',
+    borderColor: LIGHTBLUE,
     flex:1,
     padding: 10,
     margin:0,
     width:'100%'
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: 'pink',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })

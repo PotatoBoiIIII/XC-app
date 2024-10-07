@@ -4,6 +4,13 @@ const EVENT_COLOR = '#e6add8';
 const today = new Date();
 export const getDate = (offset = 0) => CalendarUtils.getCalendarDateString(new Date().setDate(today.getDate() + offset));
 
+
+
+const WHITE='#ffffff'
+const BLACK='#000000'
+const DARKBLUE='#081c64'
+const LIGHTBLUE='#92c0e2'
+const BLUEGREY = '#adc3d1'
 export const timelineEvents: TimelineEventProps[] = [
   {
     start: `${getDate(-1)} 09:20:00`,
@@ -58,7 +65,7 @@ export const timelineEvents: TimelineEventProps[] = [
     end: `${getDate(1)} 01:30:00`,
     title: 'Visit Grand Mother',
     summary: 'Visit Grand Mother and bring some fruits.',
-    color: 'lightblue'
+    color: LIGHTBLUE
   },
   {
     start: `${getDate(1)} 02:30:00`,

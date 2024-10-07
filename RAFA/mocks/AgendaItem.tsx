@@ -2,7 +2,11 @@ import isEmpty from 'lodash/isEmpty';
 import React, {useCallback, useState} from 'react';
 import {StyleSheet, Alert, View, Text, TouchableOpacity, Button, Modal, Pressable} from 'react-native';
 import testIDs from '../assets/testIDs';
-
+const WHITE='#ffffff'
+const BLACK='#000000'
+const DARKBLUE='#081c64'
+const LIGHTBLUE='#92c0e2'
+const BLUEGREY = '#adc3d1'
 
 interface ItemProps {
   item: any;
@@ -46,7 +50,7 @@ const AgendaItem = (props: ItemProps) => {
           <Text style = {{borderWidth:1, borderColor:'bl', margin:10, borderRadius:5, padding:10}}>
             {item.info==null ? "no info":item.info}
           </Text>
-          <Pressable style = {{backgroundColor:'lightblue', borderWidth:10, borderColor:'lightblue', borderRadius:5}} onPress={()=> setModalVisible(!modalVisible)}>
+          <Pressable style = {{backgroundColor:LIGHTBLUE, borderWidth:10, borderColor:LIGHTBLUE, borderRadius:5}} onPress={()=> setModalVisible(!modalVisible)}>
           <Text>
             Exit
           </Text>
@@ -64,7 +68,7 @@ const AgendaItem = (props: ItemProps) => {
       </View>
       <Text style={styles.itemTitleText}>{item.title}</Text>
       <View style={styles.itemButtonContainer}>
-        <Button color={'grey'} title={'Info'} onPress={()=>setModalVisible(!modalVisible)}/>
+        <Button color={BLUEGREY} title={'Info'} onPress={()=>setModalVisible(!modalVisible)}/>
       </View>
     </TouchableOpacity>
     </View>
@@ -83,16 +87,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   itemHourText: {
-    color: 'black'
+    color: BLACK
   },
   itemDurationText: {
-    color: 'grey',
+    color: BLUEGREY,
     fontSize: 12,
     marginTop: 4,
     marginLeft: 4
   },
   itemTitleText: {
-    color: 'black',
+    color: BLACK,
     marginLeft: 16,
     fontWeight: 'bold',
     fontSize: 16

@@ -6,6 +6,13 @@ import {agendaItems, getMarkedDates} from '../mocks/agendaItems';
 import AgendaItem from '../mocks/AgendaItem';
 import {getTheme, themeColor, lightThemeColor} from '../mocks/theme';
 
+
+
+const WHITE='#ffffff'
+const BLACK='#000000'
+const DARKBLUE='#081c64'
+const LIGHTBLUE='#92c0e2'
+const BLUEGREY = '#adc3d1'
 const leftArrowIcon = require('../assets/images/previous.png');
 const rightArrowIcon = require('../assets/images/next.png');
 const ITEMS: any[] = agendaItems;
@@ -26,6 +33,7 @@ const AgendaInfiniteListScreen = (props: Props) => {
     const isLongItem = item.itemCustomHeightType === 'LongEvent';
     return <View style={{paddingTop: isLongItem ? 40 : 0}}><AgendaItem item={item}/></View>;
   }, []);
+
 
   return (
     <CalendarProvider
@@ -76,7 +84,7 @@ const styles = StyleSheet.create({
   },
   section: {
     backgroundColor: lightThemeColor,
-    color: 'grey',
+    color: BLUEGREY,
     textTransform: 'capitalize'
   }
 });
