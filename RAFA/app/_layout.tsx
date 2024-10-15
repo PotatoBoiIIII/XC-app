@@ -9,6 +9,8 @@ import {Calendar} from 'react-native-calendars'
 import AgendaInfiniteListScreen from './Agenda';
 import {agendaItems} from '../mocks/agendaItems'
 import {dates} from '../mocks/agendaItems'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 
 const WHITE='#ffffff'
 const BLACK='#000000'
@@ -17,6 +19,7 @@ const LIGHTBLUE='#92C0E2'
 const BLUEGREY = '#adc3d1'
 const Stack = createNativeStackNavigator();
 const Separator = () => <View style = {styles.separator}/>
+const Tab = createBottomTabNavigator();
 
 
 const LoginForm = ({navigation}) =>{
@@ -46,7 +49,7 @@ return (
       </View>
 
       <View style={styles.buttonView}>
-          <Pressable style={styles.button} disabled = {false} onPress={() => navigation.navigate('Calendar', {name: 'Calendar'})}>
+          <Pressable style={styles.button} disabled = {false} onPress={() => navigation.navigate('Home', {name: 'Home'})}>
               <Text style={styles.buttonText}>LOGIN</Text>
           </Pressable>
           <Text style={styles.optionsText}>OR LOGIN WITH</Text>
@@ -160,6 +163,16 @@ const SignUpScreen = ({navigation, route}) =>{
     
   );
  }
+
+const HomeScreen = ()=>{
+    return (
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={CalendarScreen} />
+        <Tab.Screen name="Settings" component={TermsScreen} />
+      </Tab.Navigator>
+    );
+  }
+
 const CalendarScreen = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setname] = useState('')
@@ -305,7 +318,7 @@ const TermsScreen  = ({navigation, route} )=> {
               <Text >I agree to the</Text>
               <Text >Terms and Agreement</Text>
             </View>
-          <Button label = "Continue" navigation = {navigation} page = "Calendar" name = "calendar" disabled = {!isEnabled} />
+          <Button label = "Continue" navigation = {navigation} page = "Home" name = "Home" disabled = {!isEnabled} />
         </View>
       
       </View>
@@ -326,7 +339,7 @@ export default function RootLayout() {
         <Stack.Screen name="Calendar" component={CalendarScreen} options={{headerStyle:{backgroundColor:LIGHTBLUE}}}/>
         <Stack.Screen name = "Sign Up" component = {SignUpScreen} options={{headerStyle:{backgroundColor:LIGHTBLUE}}}/>
         <Stack.Screen name = "Terms and Agreement" component = {TermsScreen} options={{headerStyle:{backgroundColor:LIGHTBLUE}}}/>
-        <Stack.Screen name = "RefreshText" component = {RefreshControlTest} options={ {headerStyle:{backgroundColor:LIGHTBLUE}}}/>
+        <Stack.Screen name = "Home" component = {HomeScreen} options = {{headerStyle:{backgroundColor:LIGHTBLUE}}}/>
       </Stack.Navigator> 
     </NavigationContainer>
   );
