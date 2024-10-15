@@ -175,7 +175,7 @@ const HomeScreen = ()=>{
   }
 const Account = ({navigation})=>{
   const name = "Coach Rob"
-  let injured = false
+  const [injured, changeInjured] = useState(false)
   return(
     <View style = {styles.container}>
       <Text style = {styles.buttonText}>
@@ -185,9 +185,9 @@ const Account = ({navigation})=>{
         You are currently{injured? '':' not'} injured
       </Text>
       <Text style = {styles.buttonText}>
-        Did you get injured?
+        Did you get {injured? 'un':''}injured?
       </Text>
-      <Pressable style = {styles.button} onPress={()=>navigation.navigate('Terms and Agreement', {name:'Terms'}, injured=!injured)}>
+      <Pressable style = {styles.button} onPress={()=> changeInjured(!injured)}>
         <Text>Yes</Text>
       </Pressable>
     </View>
