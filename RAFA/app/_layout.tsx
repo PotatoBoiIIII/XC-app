@@ -198,7 +198,8 @@ const CalendarScreen = ({navigation, route}) => {
             <InputText placeHolder="Time" value={time} setValue={setTime} spaces={true}/>
             <InputText placeHolder="Date: YYYY/MM/DD" value={date} setValue={setDate} spaces={true}/>
             <InputText placeHolder="Duration" value={duration} setValue={setDuration} spaces={true}/>
-            <InputText placeHolder="Info" value={info} setValue={setInfo} spaces={true}/>
+            {/* <InputText placeHolder="Info" value={info} setValue={setInfo} spaces={true}/> */}
+            <TextInput placeholder = "Info" style = {styles.input} value = {info} onChangeText = {setInfo} placeholderTextColor={BLUEGREY} multiline = {true}/>
             <View style = {[styles.buttonView, {flexDirection:'row', alignItems:'center', justifyContent:'space-evenly',}]}>
             <Pressable onPress={()=> agendaItems.push({title:date, data:[{hour:String(time), duration:String(duration), title:String(name), info:String(info)}]}) && setModalVisible(!modalVisible)} style={styles.button} disabled = {name==""||time==""||date==""||duration=="" ? true:false}>
               <Text style = {styles.buttonText}>
@@ -349,9 +350,10 @@ const styles = StyleSheet.create({
   input : {
     height : 50,
     paddingHorizontal : 20,
-    borderColor : "blue",
-    borderWidth : 1,
-    borderRadius: 7
+    marginVertical:12,
+    borderWidth:3, 
+    borderRadius:5,
+    borderColor:LIGHTBLUE, 
   },
   rememberView : {
     width : "100%",
