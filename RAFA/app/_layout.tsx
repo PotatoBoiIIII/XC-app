@@ -169,9 +169,30 @@ const HomeScreen = ()=>{
       <Tab.Navigator>
         <Tab.Screen name="Home" component={CalendarScreen} />
         <Tab.Screen name="Settings" component={TermsScreen} />
+        <Tab.Screen name = "Account" component = {Account}/>
       </Tab.Navigator>
     );
   }
+const Account = ({navigation})=>{
+  const name = "Coach Rob"
+  let injured = false
+  return(
+    <View style = {styles.container}>
+      <Text style = {styles.buttonText}>
+        Welcome {name}
+      </Text>
+      <Text style = {styles.buttonText}>
+        You are currently{injured? '':' not'} injured
+      </Text>
+      <Text style = {styles.buttonText}>
+        Did you get injured?
+      </Text>
+      <Pressable style = {styles.button} onPress={()=>navigation.navigate('Terms and Agreement', {name:'Terms'}, injured=!injured)}>
+        <Text>Yes</Text>
+      </Pressable>
+    </View>
+  )
+}
 
 const CalendarScreen = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
