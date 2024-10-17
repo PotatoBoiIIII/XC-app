@@ -1,4 +1,4 @@
-import {Text, Image, View, TextInput, StyleSheet, SafeAreaView, ImageBackground, Pressable, ScrollView, Switch, Modal, Alert, RefreshControl} from 'react-native'
+import {Text, Image, View, TextInput, StyleSheet, SafeAreaView, ImageBackground, Pressable, ScrollView, Switch, Modal, Alert, RefreshControl, FlatList} from 'react-native'
 import {useState} from 'react'
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
@@ -10,7 +10,7 @@ import AgendaInfiniteListScreen from './Agenda';
 import {agendaItems} from '../mocks/agendaItems'
 import {dates} from '../mocks/agendaItems'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import {Athletes} from './Athletes'
 
 const WHITE='#ffffff'
 const BLACK='#000000'
@@ -21,6 +21,7 @@ const Stack = createNativeStackNavigator();
 const Separator = () => <View style = {styles.separator}/>
 const Tab = createBottomTabNavigator();
 
+type AthletProps= {name: String, grade: Int16Array, isInjured: boolean}
 
 const LoginForm = ({navigation}) =>{
   const [click,setClick] = useState(false);
@@ -167,29 +168,76 @@ const SignUpScreen = ({navigation, route}) =>{
 const HomeScreen = ()=>{
     return (
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={CalendarScreen} />
-        <Tab.Screen name="Settings" component={TermsScreen} />
         <Tab.Screen name = "Account" component = {Account}/>
+        <Tab.Screen name="Calendar" component={CalendarScreen} />
+        <Tab.Screen name = "Athletes" component = {AthletesScreen}/>
       </Tab.Navigator>
     );
   }
 const Account = ({navigation})=>{
   const name = "Coach Rob"
   const [injured, changeInjured] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
   return(
     <View style = {styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+          <View style = {[styles.container, {backgroundColor:'white'}]}>
+            <Text style = {styles.buttonText}>Are you sure?</Text>
+            <Pressable style = {styles.button} onPress = {()=> {setModalVisible(!modalVisible), changeInjured(!injured)}}>
+              Yes
+            </Pressable>
+            <Separator/>
+            <Pressable style = {styles.button} onPress = {()=> setModalVisible(!modalVisible)}>
+              No
+            </Pressable>
+          </View> 
+        </Modal>
       <Text style = {styles.buttonText}>
         Welcome {name}
       </Text>
       <Text style = {styles.buttonText}>
-        You are currently{injured? '':' not'} injured
+        You are currently<Text style = {{backgroundColor: injured? 'red': 'green', borderRadius:4}}>{injured? '':' not'} injured </Text>
       </Text>
       <Text style = {styles.buttonText}>
-        Did you get {injured? 'un':''}injured?
+        Did you {injured? 'recover':'get injured'}?
       </Text>
-      <Pressable style = {styles.button} onPress={()=> changeInjured(!injured)}>
+      <Pressable style = {styles.button} onPress={()=>{setModalVisible(!modalVisible)}}>
         <Text>Yes</Text>
       </Pressable>
+    </View>
+  )
+}
+
+const AthleteStatus=({name, grade, isInjured}: AthletProps)=>{
+  return(
+      <View style = {{flexDirection:'row', justifyContent: 'space-evenly', margin:10, borderWidth:3, padding:5, borderColor:LIGHTBLUE, width: 300}}>
+          <Text>{name}</Text>     
+          <Text style = {{backgroundColor: isInjured? 'red': 'green', borderRadius:3, borderWidth:3, borderColor: isInjured? 'red': 'green'}}>
+            {isInjured? 'Injured': 'Healthy'}    
+                  
+          </Text>
+          <Text>grade: {grade}</Text>
+      </View>
+  )
+}
+
+const AthletesScreen = ()=>{
+  return(
+    <View style = {styles.container}>
+    <FlatList
+    data = {Athletes}
+    renderItem={({item}) => <AthleteStatus name={item.name} grade={item.grade} isInjured={item.isInjured}/>}
+    keyExtractor={item => item.name}
+    >
+    </FlatList>
     </View>
   )
 }
@@ -230,7 +278,7 @@ const CalendarScreen = ({navigation, route}) => {
             
             <InputText placeHolder="event name" value={name} setValue={setname} spaces={true}/>
             <InputText placeHolder="Time" value={time} setValue={setTime} spaces={true}/>
-            <InputText placeHolder="Date: YYYY/MM/DD" value={date} setValue={setDate} spaces={true}/>
+            <InputText placeHolder="Date: YYYY-MM-DD" value={date} setValue={setDate} spaces={true}/>
             <InputText placeHolder="Duration" value={duration} setValue={setDuration} spaces={true}/>
             {/* <InputText placeHolder="Info" value={info} setValue={setInfo} spaces={true}/> */}
             <TextInput placeholder = "Info" style = {styles.input} value = {info} onChangeText = {setInfo} placeholderTextColor={BLUEGREY} multiline = {true}/>
