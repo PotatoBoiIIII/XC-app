@@ -11,6 +11,7 @@ import {agendaItems} from '../mocks/agendaItems'
 import {dates} from '../mocks/agendaItems'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Athletes} from './Athletes'
+import { Dropdown } from 'react-native-element-dropdown';
 
 const WHITE='#ffffff'
 const BLACK='#000000'
@@ -20,8 +21,18 @@ const BLUEGREY = '#adc3d1'
 const Stack = createNativeStackNavigator();
 const Separator = () => <View style = {styles.separator}/>
 const Tab = createBottomTabNavigator();
+const data = [
+  { label: 'Item 1', value: '1' },
+  { label: 'Item 2', value: '2' },
+  { label: 'Item 3', value: '3' },
+  { label: 'Item 4', value: '4' },
+  { label: 'Item 5', value: '5' },
+  { label: 'Item 6', value: '6' },
+  { label: 'Item 7', value: '7' },
+  { label: 'Item 8', value: '8' },
+];
 
-type AthletProps= {name: String, grade: Int16Array, isInjured: boolean}
+type AthleteProps= {name: String, grade: String, isInjured: boolean}
 
 const LoginForm = ({navigation}) =>{
   const [click,setClick] = useState(false);
@@ -175,7 +186,7 @@ const HomeScreen = ()=>{
     );
   }
 const Account = ({navigation})=>{
-  const name = "Coach Rob"
+  let {name, grade, isInjured} = Athletes[0]
   const [injured, changeInjured] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   return(
@@ -191,7 +202,7 @@ const Account = ({navigation})=>{
         }}>
           <View style = {[styles.container, {backgroundColor:'white'}]}>
             <Text style = {styles.buttonText}>Are you sure?</Text>
-            <Pressable style = {styles.button} onPress = {()=> {setModalVisible(!modalVisible), changeInjured(!injured)}}>
+            <Pressable style = {styles.button} onPress = {()=> {setModalVisible(!modalVisible), changeInjured(!injured), isInjured=(!isInjured)}}>
               Yes
             </Pressable>
             <Separator/>
@@ -216,7 +227,7 @@ const Account = ({navigation})=>{
   )
 }
 
-const AthleteStatus=({name, grade, isInjured}: AthletProps)=>{
+const AthleteStatus=({name, grade, isInjured}: AthleteProps)=>{
   return(
       <View style = {{flexDirection:'row', justifyContent: 'space-evenly', margin:10, borderWidth:3, padding:5, borderColor:LIGHTBLUE, width: 300}}>
           <Text>{name}</Text>     
@@ -230,13 +241,50 @@ const AthleteStatus=({name, grade, isInjured}: AthletProps)=>{
 }
 
 const AthletesScreen = ()=>{
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [value, setValue] = useState<string | undefined>(); ;
+  const [isFocus, setIsFocus] = useState(false);
+
+    const renderLabel = () => {
+      if (value || isFocus) {
+        return (
+          <Text style={[styles.label, isFocus && { color: 'blue' }]}>
+            Dropdown label
+          </Text>
+        );
+      }
+      return null;
+    };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
   return(
     <View style = {styles.container}>
+       {renderLabel()}
+       <Dropdown
+        style = {{width:300}}
+        data={data}
+        placeholder={!isFocus ? 'Filter by' : '...'}
+        value={value}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
+        onChange={item => {
+          setValue(item.value);
+          setIsFocus(false);
+        } } labelField={'label'} valueField={'label'}       >
+
+       </Dropdown>
     <FlatList
     data = {Athletes}
     renderItem={({item}) => <AthleteStatus name={item.name} grade={item.grade} isInjured={item.isInjured}/>}
     keyExtractor={item => item.name}
-    >
+    refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }>
     </FlatList>
     </View>
   )
@@ -517,5 +565,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'pink',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
   },
 })
