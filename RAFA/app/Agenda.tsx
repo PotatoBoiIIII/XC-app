@@ -1,5 +1,5 @@
 import React, {useRef, useCallback} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {RefreshControl, StyleSheet, View} from 'react-native';
 import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar} from 'react-native-calendars';
 import testIDs from '../assets/testIDs';
 import {agendaItems, getMarkedDates} from '../mocks/agendaItems';
@@ -33,7 +33,14 @@ const AgendaInfiniteListScreen = (props: Props) => {
     const isLongItem = item.itemCustomHeightType === 'LongEvent';
     return <View style={{paddingTop: isLongItem ? 40 : 0}}><AgendaItem item={item}/></View>;
   }, []);
+  const [refreshing, setRefreshing] = React.useState(true);
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(true);
+    }, 2000);
+  }, []);
 
   return (
     <CalendarProvider
@@ -55,6 +62,9 @@ const AgendaInfiniteListScreen = (props: Props) => {
       )}
       <AgendaList
         sections={ITEMS}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        initialNumToRender={7}
         renderItem={renderItem}
         sectionStyle={styles.section}
         infiniteListProps={

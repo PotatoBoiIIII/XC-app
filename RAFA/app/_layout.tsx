@@ -21,18 +21,18 @@ const BLUEGREY = '#adc3d1'
 const Stack = createNativeStackNavigator();
 const Separator = () => <View style = {styles.separator}/>
 const Tab = createBottomTabNavigator();
-const data = [
-  { label: 'Item 1', value: '1' },
-  { label: 'Item 2', value: '2' },
-  { label: 'Item 3', value: '3' },
-  { label: 'Item 4', value: '4' },
-  { label: 'Item 5', value: '5' },
+const DropdownOptions = [
+  { label: 'Grade(ascending)', value: 'Grade(ascending)' },
+  { label: 'Grade(descending)', value: 'Grade(descending)' },
+  { label: 'First Name', value: 'First Name' },
+  { label: 'Last Name', value: 'Last Name' },
+  { label: 'Injury Status', value: 'Injury Status'},
   { label: 'Item 6', value: '6' },
   { label: 'Item 7', value: '7' },
   { label: 'Item 8', value: '8' },
 ];
 
-type AthleteProps= {name: String, grade: String, isInjured: boolean}
+type AthleteProps= {name: String, grade: Number, isInjured: boolean}
 
 const LoginForm = ({navigation}) =>{
   const [click,setClick] = useState(false);
@@ -61,7 +61,7 @@ return (
       </View>
 
       <View style={styles.buttonView}>
-          <Pressable style={styles.button} disabled = {false} onPress={() => navigation.navigate('Home', {name: 'Home'})}>
+          <Pressable style={styles.button} disabled = {false} onPress={() => navigation.reset({index:0, routes:[{name:'Home'}]})}>
               <Text style={styles.buttonText}>LOGIN</Text>
           </Pressable>
           <Text style={styles.optionsText}>OR LOGIN WITH</Text>
@@ -81,82 +81,7 @@ return (
   </SafeAreaView>
 )
 }
-const RefreshControlTest = ({navigation}) =>{
-  const [refreshing, setRefreshing] = React.useState(false);
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-        contentContainerStyle={styles.scrollView}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-
-        <Text>Pull down to see RefreshControl indicator</Text><Text>Pull down to see RefreshControl indicator</Text>
-
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-
-
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-        <Text>Pull down to see RefreshControl indicator</Text>
-
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
 const SignUpScreen = ({navigation, route}) =>{
   const[blank, onChangeEmail] = React.useState('')
   const[blank2, onChangeUsername] = React.useState('')
@@ -187,7 +112,7 @@ const HomeScreen = ()=>{
   }
 const Account = ({navigation})=>{
   let {name, grade, isInjured} = Athletes[0]
-  const [injured, changeInjured] = useState(false)
+  const [injured, changeInjured] = useState(isInjured)
   const [modalVisible, setModalVisible] = useState(false)
   return(
     <View style = {styles.container}>
@@ -202,12 +127,12 @@ const Account = ({navigation})=>{
         }}>
           <View style = {[styles.container, {backgroundColor:'white'}]}>
             <Text style = {styles.buttonText}>Are you sure?</Text>
-            <Pressable style = {styles.button} onPress = {()=> {setModalVisible(!modalVisible), changeInjured(!injured), isInjured=(!isInjured)}}>
-              Yes
+            <Pressable style = {styles.button} onPress = {()=> {setModalVisible(!modalVisible), changeInjured(!injured), Athletes[0].isInjured=!injured}}>
+              <Text>Yes</Text>
             </Pressable>
             <Separator/>
             <Pressable style = {styles.button} onPress = {()=> setModalVisible(!modalVisible)}>
-              No
+              <Text>No</Text>
             </Pressable>
           </View> 
         </Modal>
@@ -215,7 +140,7 @@ const Account = ({navigation})=>{
         Welcome {name}
       </Text>
       <Text style = {styles.buttonText}>
-        You are currently<Text style = {{backgroundColor: injured? 'red': 'green', borderRadius:4}}>{injured? '':' not'} injured </Text>
+        You are currently <Text style = {{backgroundColor: injured? 'red': 'green', borderRadius:4}}>{injured? '':' not'} injured </Text>
       </Text>
       <Text style = {styles.buttonText}>
         Did you {injured? 'recover':'get injured'}?
@@ -235,7 +160,7 @@ const AthleteStatus=({name, grade, isInjured}: AthleteProps)=>{
             {isInjured? 'Injured': 'Healthy'}    
                   
           </Text>
-          <Text>grade: {grade}</Text>
+          <Text>grade: {String(grade)}</Text>
       </View>
   )
 }
@@ -244,13 +169,14 @@ const AthletesScreen = ()=>{
   const [refreshing, setRefreshing] = React.useState(false);
   const [value, setValue] = useState<string | undefined>(); ;
   const [isFocus, setIsFocus] = useState(false);
+  const [Gender, changeGender]  = useState('Boy')
 
     const renderLabel = () => {
       if (value || isFocus) {
         return (
-          <Text style={[styles.label, isFocus && { color: 'blue' }]}>
-            Dropdown label
-          </Text>
+          <View>
+            
+          </View>
         );
       }
       return null;
@@ -262,30 +188,59 @@ const AthletesScreen = ()=>{
       setRefreshing(false);
     }, 2000);
   }, []);
+
+  if(value=='First Name'){
+    Athletes.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })); 
+  }
+  else if(value=="Grade(ascending)"){
+    Athletes.sort((a,b)=> {return a.grade-b.grade})
+  }
+  else if(value=='Grade(descending)'){
+    Athletes.sort((a,b)=> {return b.grade-a.grade})
+  }
+  else if(value=='Injury Status'){
+    Athletes.sort((a,b)=>{return Number(b.isInjured)-Number(a.isInjured)})
+  }
+  else if(value =="Last Name"){
+    Athletes.sort((a, b) => a.name.substring(a.name.indexOf(' ')).localeCompare(b.name.substring(b.name.indexOf(' ')), undefined, { sensitivity: 'base' })); 
+  }
+
   return(
     <View style = {styles.container}>
-       {renderLabel()}
-       <Dropdown
-        style = {{width:300}}
-        data={data}
-        placeholder={!isFocus ? 'Filter by' : '...'}
-        value={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={item => {
-          setValue(item.value);
-          setIsFocus(false);
-        } } labelField={'label'} valueField={'label'}       >
+      <View style = {{flexDirection:'row', flex:1/10, alignItems:'center', justifyContent:'center'}}>
 
-       </Dropdown>
+        {renderLabel()}
+        <Dropdown
+          style = {{width:200}}
+          data={DropdownOptions}
+          placeholder={!isFocus ? 'Filter by' : '...'}
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          } } labelField={'label'} valueField={'label'}       >
+
+        </Dropdown>
+        <Pressable style = {{backgroundColor: Gender=='Boy'? LIGHTBLUE:'grey',  borderColor:Gender=='Boy'? LIGHTBLUE:'grey', borderTopLeftRadius: 5, borderBottomLeftRadius:5, borderWidth:5}} onPress={()=>changeGender('Boy')} disabled = {Gender=="Boy"}>
+          <Text>Boys</Text>
+        </Pressable>
+        <Pressable style = {{backgroundColor: Gender=='Girl'? LIGHTBLUE:'grey', borderColor:Gender=='Girl'? LIGHTBLUE:'grey', borderTopRightRadius: 5, borderBottomRightRadius:5, borderWidth:5 }} onPress={()=>changeGender('Girl')} disabled = {Gender=="Girl"}>
+          <Text>Girls</Text>
+        </Pressable>
+       </View>
+      <View style = {styles.container}>
     <FlatList
-    data = {Athletes}
+    style = {{flex:1}}
+    data = {Athletes.filter((athlete)=>{return athlete.gender==Gender})}
     renderItem={({item}) => <AthleteStatus name={item.name} grade={item.grade} isInjured={item.isInjured}/>}
     keyExtractor={item => item.name}
     refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     }>
     </FlatList>
+    </View>
     </View>
   )
 }
@@ -307,7 +262,11 @@ const CalendarScreen = ({navigation, route}) => {
     }, 2000);
   }, []);
   return(
-    //<View style = {[styles.container, {flexDirection:'row'}]}>
+    <ScrollView
+    contentContainerStyle={styles.scrollView}
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }>
     <View style = {[styles.container] }>
         
 
@@ -322,13 +281,12 @@ const CalendarScreen = ({navigation, route}) => {
           setModalVisible(!modalVisible);
         }}>
         <View style={styles.container}>
-          <View style = {[styles.container,{backgroundColor:'white', width:'50%'}]}>
+          <View style = {[styles.container,{backgroundColor:'white'}]}>
             
             <InputText placeHolder="event name" value={name} setValue={setname} spaces={true}/>
             <InputText placeHolder="Time" value={time} setValue={setTime} spaces={true}/>
             <InputText placeHolder="Date: YYYY-MM-DD" value={date} setValue={setDate} spaces={true}/>
             <InputText placeHolder="Duration" value={duration} setValue={setDuration} spaces={true}/>
-            {/* <InputText placeHolder="Info" value={info} setValue={setInfo} spaces={true}/> */}
             <TextInput placeholder = "Info" style = {styles.input} value = {info} onChangeText = {setInfo} placeholderTextColor={BLUEGREY} multiline = {true}/>
             <View style = {[styles.buttonView, {flexDirection:'row', alignItems:'center', justifyContent:'space-evenly',}]}>
             <Pressable onPress={()=> agendaItems.push({title:date, data:[{hour:String(time), duration:String(duration), title:String(name), info:String(info)}]}) && setModalVisible(!modalVisible)} style={styles.button} disabled = {name==""||time==""||date==""||duration=="" ? true:false}>
@@ -353,6 +311,7 @@ const CalendarScreen = ({navigation, route}) => {
       </Pressable>
         <AgendaInfiniteListScreen/>
       </View>
+      </ScrollView>
     
     
 
@@ -562,7 +521,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    backgroundColor: 'pink',
     alignItems: 'center',
     justifyContent: 'center',
   },
