@@ -207,7 +207,7 @@ const AthletesScreen = ()=>{
 
   return(
     <View style = {styles.container}>
-      <View style = {{flexDirection:'row', flex:1/10, paddingHorizontal:20, alignItems:'center', borderBottomWidth:1, justifyContent:'center', shadowColor: '#171717', shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
+      <View style = {{flexDirection:'row', flex:1/10, paddingHorizontal:20, alignItems:'center', borderBottomWidth :1, justifyContent:'center', shadowColor: '#171717', shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
 
         {renderLabel()}
         <Dropdown
