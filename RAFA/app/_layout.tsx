@@ -12,6 +12,7 @@ import {dates} from '../mocks/agendaItems'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Athletes} from './Athletes'
 import { Dropdown } from 'react-native-element-dropdown';
+import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
 const WHITE='#ffffff'
 const BLACK='#000000'
@@ -32,7 +33,7 @@ const DropdownOptions = [
   { label: 'Item 8', value: '8' },
 ];
 
-type AthleteProps= {name: String, grade: Number, isInjured: boolean}
+type AthleteProps= {name: String, grade: Number, isInjured: boolean, Gender: String}
 
 const LoginForm = ({navigation}) =>{
   const [click,setClick] = useState(false);
@@ -50,7 +51,7 @@ return (
       </View>
       <View style={styles.rememberView}>
           <View style={styles.switch}>
-              <Switch  value={click} onValueChange={setClick} trackColor={{true : "lightblue" , false : "gray"}} navigation/>
+              <Switch  value={click} onValueChange={setClick} trackColor={{true : "lightblue" , false : "gray"}}/>
               <Text style={styles.rememberText}>Remember Me</Text>
           </View>
           <View>
@@ -61,7 +62,7 @@ return (
       </View>
 
       <View style={styles.buttonView}>
-          <Pressable style={styles.button} disabled = {false} onPress={() => navigation.reset({index:0, routes:[{name:'Home'}]})}>
+          <Pressable style={styles.button} disabled = {false} onPress={() => navigation.navigate('Home', {name:'Home'})}>
               <Text style={styles.buttonText}>LOGIN</Text>
           </Pressable>
           <Text style={styles.optionsText}>OR LOGIN WITH</Text>
@@ -154,13 +155,13 @@ const Account = ({navigation})=>{
 
 const AthleteStatus=({name, grade, isInjured}: AthleteProps)=>{
   return(
-      <View style = {{flexDirection:'row', justifyContent: 'space-evenly', margin:10, borderWidth:3, padding:5, borderColor:LIGHTBLUE, width: 300}}>
-          <Text>{name}</Text>     
-          <Text style = {{backgroundColor: isInjured? 'red': 'green', borderRadius:3, borderWidth:3, borderColor: isInjured? 'red': 'green'}}>
+      <View style = {{flexDirection:'row', justifyContent: 'space-evenly', margin:0, borderRightWidth:3, borderLeftWidth:3, borderTopWidth:3, padding:5, borderColor:LIGHTBLUE, width: 350}}>
+          <Text style = {{flex:1}}>{name}</Text>     
+          <Text style = {{flex:1/3, marginHorizontal:5, backgroundColor: isInjured? 'red': 'green', borderRadius:3, borderWidth:3, borderColor: isInjured? 'red': 'green'}}>
             {isInjured? 'Injured': 'Healthy'}    
                   
           </Text>
-          <Text>grade: {String(grade)}</Text>
+          <Text style = {{flex:1}}>grade: {String(grade)}</Text>
       </View>
   )
 }
@@ -211,9 +212,9 @@ const AthletesScreen = ()=>{
 
         {renderLabel()}
         <Dropdown
-          style = {{width:200}}
+          style = {{width:200, backgroundColor:'lightgrey', margin:10, borderWidth:5, borderColor:'lightgrey', borderRadius:5}}
           data={DropdownOptions}
-          placeholder={!isFocus ? 'Filter by' : '...'}
+          placeholder={!isFocus ? 'Sort by' : '...'}
           value={value}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
@@ -234,7 +235,7 @@ const AthletesScreen = ()=>{
     <FlatList
     style = {{flex:1}}
     data = {Athletes.filter((athlete)=>{return athlete.gender==Gender})}
-    renderItem={({item}) => <AthleteStatus name={item.name} grade={item.grade} isInjured={item.isInjured}/>}
+    renderItem={({item}) => <AthleteStatus name={item.name} grade={item.grade} isInjured={item.isInjured} Gender={item.gender}/>}
     keyExtractor={item => item.name}
     refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -248,12 +249,44 @@ const AthletesScreen = ()=>{
 const CalendarScreen = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setname] = useState('')
+  const [date, setDate] = useState(new Date())
   const [time, setTime] = useState('')
-  const [date, setDate] = useState('')
   const [info, setInfo] = useState('')
   const [duration, setDuration] = useState('')
   const [selected, setSelected] = useState('');
   const [refreshing, setRefreshing] = React.useState(false);
+  const [open, setOpen]=useState(false)
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date: any) => {
+    console.warn("A date has been picked: ", date);
+    setDate(date)
+    hideDatePicker();
+  };
+
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+  };
+
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  };
+
+  const handleTimeConfirm = (time) => {
+    console.warn("A date has been picked: ", time);
+    setTime(String(time.toLocaleTimeString([], {timeStyle:'short'})))
+    hideTimePicker();
+  };
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -284,12 +317,20 @@ const CalendarScreen = ({navigation, route}) => {
           <View style = {[styles.container,{backgroundColor:'white'}]}>
             
             <InputText placeHolder="event name" value={name} setValue={setname} spaces={true}/>
-            <InputText placeHolder="Time" value={time} setValue={setTime} spaces={true}/>
-            <InputText placeHolder="Date: YYYY-MM-DD" value={date} setValue={setDate} spaces={true}/>
+            <Pressable  style = {{borderColor: LIGHTBLUE, borderWidth:3, borderRadius:5, margin:6}} onPress={()=> showTimePicker()}><Text>Set Time: {time}</Text></Pressable>
+            <DateTimePickerModal isVisible={isTimePickerVisible} mode = 'time' onConfirm={handleTimeConfirm} onCancel={hideTimePicker}></DateTimePickerModal>
+            <Pressable style = {{borderColor: LIGHTBLUE, borderWidth:3, borderRadius:5, margin:6}} onPress={()=> showDatePicker()}><Text>Set Date: {String(date.toDateString())}</Text></Pressable>
+            <DateTimePickerModal isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}></DateTimePickerModal>
+            
+      
             <InputText placeHolder="Duration" value={duration} setValue={setDuration} spaces={true}/>
+            
             <TextInput placeholder = "Info" style = {styles.input} value = {info} onChangeText = {setInfo} placeholderTextColor={BLUEGREY} multiline = {true}/>
             <View style = {[styles.buttonView, {flexDirection:'row', alignItems:'center', justifyContent:'space-evenly',}]}>
-            <Pressable onPress={()=> agendaItems.push({title:date, data:[{hour:String(time), duration:String(duration), title:String(name), info:String(info)}]}) && setModalVisible(!modalVisible)} style={styles.button} disabled = {name==""||time==""||date==""||duration=="" ? true:false}>
+            <Pressable onPress={()=> {agendaItems.push({title:String(date), data:[{ hour: time, duration:String(duration), title:String(name), info:String(info)}]}), setModalVisible(!modalVisible), setDate(new Date()), setname(''), setTime(''), setInfo(''), setDuration('')}} style={styles.button} disabled = {name==""||time==""||duration=="" ? true:false}>
               <Text style = {styles.buttonText}>
                 add event
               </Text>
@@ -329,42 +370,6 @@ const TermsScreen  = ({navigation, route} )=> {
         
         <View style = {[styles.container, {flex:6}]}>
           <ScrollView style = {{borderWidth:3, borderColor:LIGHTBLUE, padding: 30, flex:6}}>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
-            <Text>please work</Text>
             <Text>please work</Text>
             <Text>please work</Text>
             <Text>please work</Text>
