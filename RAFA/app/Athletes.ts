@@ -15,7 +15,7 @@ export const Athletes = [
         name: 'Luke Yen', grade: 10, isInjured: false, gender: 'Boy'
     }, 
     {
-        name: 'Giorgio Banna', grade: 11, isInjured: true, gender: 'Boy'
+        name: 'Diorgio Banana', grade: 11, isInjured: true, gender: 'Boy'
     }, 
     {
         name: 'Kenji Ross', grade: 9, isInjured: false, gender: 'Boy'

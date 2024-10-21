@@ -28,9 +28,6 @@ const DropdownOptions = [
   { label: 'First Name', value: 'First Name' },
   { label: 'Last Name', value: 'Last Name' },
   { label: 'Injury Status', value: 'Injury Status'},
-  { label: 'Item 6', value: '6' },
-  { label: 'Item 7', value: '7' },
-  { label: 'Item 8', value: '8' },
 ];
 
 type AthleteProps= {name: String, grade: Number, isInjured: boolean, Gender: String}
