@@ -90,8 +90,11 @@ class RAFA {
             System.out.println("right");
             System.out.println("both");
             String s = sc.nextLine();
-            if (s.equals("left")||s.equals("right")||s.equals("both")){
+            if (s.equals("left")||s.equals("right")){
                 return s;
+            }
+            else if (s.equals("both")){
+                return "left and right";
             }
             System.out.println("please enter a valid answer");
         }
