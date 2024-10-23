@@ -13,6 +13,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Athletes} from './Athletes'
 import { Dropdown } from 'react-native-element-dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
+import { add } from 'lodash';
 
 const WHITE='#ffffff'
 const BLACK='#000000'
@@ -150,20 +151,25 @@ const Account = ({navigation})=>{
   )
 }
 
-const AthleteStatus=({name, grade, isInjured}: AthleteProps)=>{
-  return(
-      <View style = {{flexDirection:'row', justifyContent: 'space-evenly', margin:0, borderRightWidth:3, borderLeftWidth:3, borderTopWidth:3, padding:5, borderColor:LIGHTBLUE, width: 350}}>
-          <Text style = {{flex:1}}>{name}</Text>     
-          <Text style = {{flex:1/3, marginHorizontal:5, backgroundColor: isInjured? 'red': 'green', borderRadius:3, borderWidth:3, borderColor: isInjured? 'red': 'green'}}>
-            {isInjured? 'Injured': 'Healthy'}    
-                  
-          </Text>
-          <Text style = {{flex:1}}>grade: {String(grade)}</Text>
-      </View>
-  )
-}
+
 
 const AthletesScreen = ()=>{
+  let index=0
+  const AthleteStatus=({name, grade, isInjured}: AthleteProps)=>{
+    index+=1
+
+    return(
+        <View style = {{flexDirection:'row', justifyContent: 'space-evenly', margin:0, borderRightWidth:3, borderLeftWidth:3, borderTopWidth:3, padding:5, borderColor:LIGHTBLUE, width: 350}}>
+            <Text>{String(index)}. </Text>
+            <Text style = {{flex:1}}>{name}</Text>     
+            <Text style = {{flex:1/3, marginHorizontal:5, backgroundColor: isInjured? 'red': 'green', borderRadius:3, borderWidth:3, borderColor: isInjured? 'red': 'green'}}>
+              {isInjured? 'Injured': 'Healthy'}    
+                    
+            </Text>
+            <Text style = {{flex:1}}>grade: {String(grade)}</Text>
+        </View>
+    )
+  }
   const [refreshing, setRefreshing] = React.useState(false);
   const [value, setValue] = useState<string | undefined>(); ;
   const [isFocus, setIsFocus] = useState(false);
@@ -179,7 +185,6 @@ const AthletesScreen = ()=>{
       }
       return null;
     };
-
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
@@ -202,7 +207,7 @@ const AthletesScreen = ()=>{
   else if(value =="Last Name"){
     Athletes.sort((a, b) => a.name.substring(a.name.indexOf(' ')).localeCompare(b.name.substring(b.name.indexOf(' ')), undefined, { sensitivity: 'base' })); 
   }
-
+  
   return(
     <View style = {styles.container}>
       <View style = {{flexDirection:'row', flex:1/10, paddingHorizontal:20, alignItems:'center', borderBottomWidth :1, justifyContent:'center', shadowColor: '#171717', shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.2, shadowRadius: 3,}}>
@@ -221,10 +226,10 @@ const AthletesScreen = ()=>{
           } } labelField={'label'} valueField={'label'}       >
 
         </Dropdown>
-        <Pressable style = {{backgroundColor: Gender=='Boy'? LIGHTBLUE:'grey',  borderColor:Gender=='Boy'? LIGHTBLUE:'grey', borderTopLeftRadius: 5, borderBottomLeftRadius:5, borderWidth:5}} onPress={()=>changeGender('Boy')} disabled = {Gender=="Boy"}>
+        <Pressable style = {{backgroundColor: Gender=='Boy'? LIGHTBLUE:'grey',  borderColor:Gender=='Boy'? LIGHTBLUE:'grey', borderTopLeftRadius: 5, borderBottomLeftRadius:5, borderWidth:5}} onPress={()=>{index=0,changeGender('Boy')}} disabled = {Gender=="Boy"}>
           <Text>Boys</Text>
         </Pressable>
-        <Pressable style = {{backgroundColor: Gender=='Girl'? LIGHTBLUE:'grey', borderColor:Gender=='Girl'? LIGHTBLUE:'grey', borderTopRightRadius: 5, borderBottomRightRadius:5, borderWidth:5 }} onPress={()=>changeGender('Girl')} disabled = {Gender=="Girl"}>
+        <Pressable style = {{backgroundColor: Gender=='Girl'? LIGHTBLUE:'grey', borderColor:Gender=='Girl'? LIGHTBLUE:'grey', borderTopRightRadius: 5, borderBottomRightRadius:5, borderWidth:5 }} onPress={()=>{index=0, changeGender('Girl')}} disabled = {Gender=="Girl"}>
           <Text>Girls</Text>
         </Pressable>
        </View>
@@ -238,9 +243,12 @@ const AthletesScreen = ()=>{
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     }>
     </FlatList>
+    
     </View>
     </View>
   )
+  
+  
 }
 
 const CalendarScreen = ({navigation, route}) => {
